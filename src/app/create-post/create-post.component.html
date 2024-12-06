@@ -1,0 +1,28 @@
+<div class="create-post-container">
+  <h2>Crear un nuevo Post</h2>
+  <form (ngSubmit)="submitPost()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput [(ngModel)]="post.title" name="title" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contenido</mat-label>
+      <textarea matInput [(ngModel)]="post.content" name="content" rows="6" required></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Etiquetas (separadas por comas)</mat-label>
+      <input matInput [(ngModel)]="tagsInput" name="tags">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>URL de la imagen</mat-label>
+      <input matInput [(ngModel)]="post.img" name="img">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" class="submit-button">
+      Publicar
+    </button>
+  </form>
+</div>

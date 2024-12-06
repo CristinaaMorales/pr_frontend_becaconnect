@@ -1,0 +1,50 @@
+  <!-- Barra de búsqueda -->
+  <div class="search-bar-container">
+    <input
+      type="text"
+      class="search-input"
+      [(ngModel)]="searchTag"
+      placeholder="Search by tag..."
+    />
+    <button class="search-button" (click)="searchPostsByTag()">Search</button>
+  </div>
+
+<div class="posts-container">
+
+
+      <!-- Lista de posts -->
+
+  <div *ngFor="let post of posts" class="post">
+    <h2>
+      <a [routerLink]="['/post', post.id]">{{ post.title }}</a>
+    </h2>
+    <p>Autor: {{ post.postedBy }}</p>
+    <p>Fecha: {{ post.date | date:'short' }}</p>
+
+    <!-- Mostrar la imagen del post -->
+    <div class="post-image">
+      <img [src]="post.img" alt="Imagen del post" style="width: 100%; height: auto;">
+    </div>
+
+    <!-- Contenido del post con truncamiento -->
+    <div [ngClass]="{ 'truncated-content': !post.expanded, 'expanded-content': post.expanded }">
+      <p>{{ post.content }}</p>
+    </div>
+
+    <!-- Botón para ver más detalles del post -->
+    <button (click)="goToPostDetail(post.id)" class="read-more-button">
+      Read more
+    </button>
+
+    <div class="post-tags">
+      <a *ngFor="let tag of post.tags" class="tag" [routerLink]="['/tags', tag]">{{ tag }}</a>
+    </div>
+    
+
+    <div class="post-meta">
+      <span>Likes: {{ post.likeCount }}</span> |
+      <span>Vistas: {{ post.viewCount }}</span> |
+      <span>Comentarios: {{ post.commentCount }}</span>
+    </div>
+  </div>
+</div>

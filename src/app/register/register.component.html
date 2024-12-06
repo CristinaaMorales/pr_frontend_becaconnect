@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="register-box mat-elevation-z8" >
+    <h2 class="register-title">Registro</h2>
+    <form (ngSubmit)="register()" class="register-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="user.username" name="username" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="user.password" name="password" [type]="hidePassword ? 'password' : 'text'" required>
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirmar Password</mat-label>
+        <input matInput [(ngModel)]="confirmPassword" name="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'" required>
+        <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword">
+          <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" class="register-button" type="submit">Registrarse</button>
+    </form>
+  
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

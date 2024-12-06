@@ -1,0 +1,29 @@
+<div class="posts-container">
+    <h2>Posts with tag: {{ tag }}</h2>
+    
+    <div *ngFor="let post of filteredPosts" class="post">
+      <h2>{{ post.title }}</h2>
+      <p>Autor: {{ post.postedBy }}</p>
+      <p>Fecha: {{ post.date | date:'short' }}</p>
+  
+      <!-- Mostrar la imagen del post -->
+      <div class="post-image">
+        <img [src]="post.img" alt="Imagen del post" style="width: 100%; height: auto;">
+      </div>
+  
+      <div class="post-content">
+        <p>{{ post.content }}</p>
+      </div>
+  
+      <div class="post-tags">
+        <span *ngFor="let tag of post.tags" class="tag">{{ tag }}</span>
+      </div>
+  
+      <div class="post-meta">
+        <span>Likes: {{ post.likeCount }}</span> |
+        <span>Vistas: {{ post.viewCount }}</span> |
+        <span>Comentarios: {{ post.commentCount }}</span>
+      </div>
+    </div>
+  </div>
+  

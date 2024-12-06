@@ -1,0 +1,113 @@
+<div class="post-detail-container">
+  <!-- Título del post -->
+  <h1>{{ post?.title }}</h1>
+
+  <!-- Contenedor para los íconos de editar, eliminar y like -->
+  <div class="action-buttons">
+    <!-- Íconos de editar y eliminar visibles solo para administradores -->
+    <div class="edit-delete-buttons" *ngIf="isAuthenticated() && isAdmin()">
+      <button mat-button color="primary" (click)="editPost()">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+      <button mat-button color="warn" (click)="deletePost()">
+        <mat-icon>delete</mat-icon> Eliminar
+      </button>
+    </div>
+
+    <!-- Ícono de Like -->
+    <div class="like-button">
+      <button mat-icon-button (click)="likePost()">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Detalles del autor y fecha -->
+  <p>Autor: {{ post?.postedBy }}</p>
+  <p>Fecha: {{ post?.date | date:'short' }}</p>
+
+  <!-- Imagen del post -->
+  <div class="post-image">
+    <img *ngIf="post?.img" [src]="post?.img" alt="Imagen del post">
+  </div>
+
+  <!-- Contenido del post -->
+  <div class="post-content">
+    <p>{{ post?.content }}</p>
+  </div>
+
+  <!-- Tags del post -->
+  <div class="post-tags">
+    <span *ngFor="let tag of post?.tags" class="tag" [routerLink]="['/tags', tag]">{{ tag }}</span>
+  </div>
+
+  <!-- Metadata del post -->
+  <div class="post-meta">
+    <span>Likes: {{ post?.likeCount }}</span> | 
+    <span>Vistas: {{ post?.viewCount }}</span> |
+    <span>Comentarios: {{ post?.commentCount }}</span>
+  </div>
+
+  <!-- Comentarios -->
+  <section class="comments-section">
+    <h2>Comentarios</h2>
+
+    <div class="comment-form">
+      <!-- Mostrar el nombre del usuario si está autenticado -->
+      <div *ngIf="isAuthenticated()">
+        <p><strong>Usuario:</strong> {{ loggedInUsername }}</p>
+      </div>
+    
+      <!-- Campo de nombre para usuarios no autenticados -->
+      <div *ngIf="!isAuthenticated()">
+        <input 
+          [(ngModel)]="newComment.username" 
+          placeholder="Guest" 
+          class="comment-input" 
+          [readonly]="true" 
+          style="background-color: #f0f0f0; color: #a9a9a9; border: 1px solid #dcdcdc;" 
+        />
+      </div>
+      
+    
+      <!-- Caja de texto del comentario -->
+      <textarea 
+        [(ngModel)]="newComment.content" 
+        placeholder="Escribe tu comentario..." 
+        class="comment-textarea">
+      </textarea>
+    
+      <!-- Botón para enviar el comentario -->
+      <button 
+        (click)="addComment()" 
+        [disabled]="!newComment.content.trim()" 
+        class="comment-btn">
+        Agregar comentario
+      </button>
+    
+      <!-- Mensaje de error en caso de fallo -->
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </div>
+    
+
+    <!-- Listas de comentarios -->
+    <div class="comment-list">
+      <div *ngFor="let comment of comments" class="comment">
+        <p>
+          <strong>{{ comment.username | titlecase }}:</strong>
+          {{ comment.content }}
+        </p>
+        <p class="comment-date">{{ comment.createdAt | date: 'short' }}</p>
+      </div>
+    </div>
+    
+    
+    
+    
+  </section>
+
+  <!-- Botón para regresar a la lista de posts -->
+  <button (click)="goBack()" class="back-btn">Volver a los Posts</button>
+</div>
